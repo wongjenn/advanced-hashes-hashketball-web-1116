@@ -209,15 +209,19 @@ def player_stats(player)
 end
 
 def big_shoe_rebounds
-  big_shoe = Hash.new(0)
+  big_shoe = 0
+  rebound = 0
 
   game_hash.each do |location, team_data|
     team_data.each do |attribute, data_item|
-      if data_item.to_s == team
-        big_shoe = team_data[:players].map { |player, stats| stats[:shoe].to_s => stats[:rebounds] }
-      end
+        team_data[:players].each do |player, stats|
+          if stats[:shoe] > big_shoe
+            big_shoe = stats[:shoe]
+            rebound = stats[:rebounds]
+          end
+        end
     end
   end
 
-  puts big_shoe
+  rebound
 end
